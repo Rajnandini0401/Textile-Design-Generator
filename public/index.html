@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Textile Design Studio</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Navigation Bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#home">
+        <span class="brand-icon">✨</span> AI Textile Studio
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="#studio">Design Studio</a></li>
+          <li class="nav-item"><a class="nav-link" href="#inspirations">Inspirations</a></li>
+          <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+          <li class="nav-item ms-3" id="authNav">
+            <button class="btn btn-gold btn-sm" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Container -->
+  <div class="main-wrapper">
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <h6 class="text-uppercase fw-bold text-gold">Design Control</h6>
+      </div>
+
+      <!-- Prompt Input -->
+      <div class="form-section">
+        <label class="form-label text-gold">Your Vision</label>
+        <textarea 
+          class="form-control form-control-dark" 
+          id="promptInput" 
+          placeholder="Describe your textile design... e.g., 'Traditional peacock motif with gold embroidery on burgundy silk'"
+          rows="4"
+        ></textarea>
+      </div>
+
+      <!-- Generate Prompt Button -->
+      <button class="btn btn-outline-gold w-100 mb-3" id="generatePromptBtn">
+        <i class="fas fa-sparkles"></i> Generate Prompt
+      </button>
+
+      <!-- Region Dropdown -->
+      <div class="form-section">
+        <label class="form-label text-gold">Regional Influence</label>
+        <select class="form-select form-select-dark" id="regionSelect">
+          <option value="Maharashtra">Maharashtra</option>
+          <option value="Gujarat">Gujarat</option>
+          <option value="Rajasthan">Rajasthan</option>
+        </select>
+      </div>
+
+      <!-- Pattern Type Dropdown -->
+      <div class="form-section">
+        <label class="form-label text-gold">Pattern Type</label>
+        <select class="form-select form-select-dark" id="patternSelect">
+          <option value="Traditional">Traditional</option>
+          <option value="Floral">Floral</option>
+          <option value="Geometric">Geometric</option>
+          <option value="Abstract">Abstract</option>
+        </select>
+      </div>
+
+      <!-- Surprise Me Button -->
+      <button class="btn btn-outline-gold w-100 mb-3" id="surpriseMeBtn">
+        <i class="fas fa-dice"></i> Surprise Me
+      </button>
+
+      <!-- Generate Design Button -->
+      <button class="btn btn-gold w-100 generate-btn" id="generateDesignBtn">
+        <i class="fas fa-wand-magic-sparkles"></i> Generate Design
+      </button>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Toggle Sidebar Button (Mobile) -->
+      <button class="btn btn-outline-gold btn-sm sidebar-toggle" id="sidebarToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <!-- Design Display Section -->
+      <div class="design-section">
+        <div class="design-container" id="designContainer">
+          <div class="placeholder-design">
+            <div class="placeholder-content">
+              <i class="fas fa-image"></i>
+              <p>Your AI-generated textile design will appear here</p>
+              <small>Describe your vision and click "Generate Design"</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Design Info -->
+        <div class="design-info" id="designInfo" style="display: none;">
+          <div class="prompt-display">
+            <strong>Prompt Used:</strong>
+            <p id="promptUsed"></p>
+          </div>
+          <div class="design-actions">
+            <button class="btn btn-sm btn-outline-gold" id="downloadBtn">
+              <i class="fas fa-download"></i> Download
+            </button>
+            <button class="btn btn-sm btn-outline-gold" id="shareBtn">
+              <i class="fas fa-share-alt"></i> Share
+            </button>
+            <button class="btn btn-sm btn-outline-gold" id="regenerateBtn">
+              <i class="fas fa-redo"></i> Regenerate
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Suggested Designs Section -->
+      <div class="inspirations-section" id="inspirations">
+        <h3 class="section-title">Get Inspired</h3>
+        <div class="inspirations-grid" id="inspirationsGrid">
+          <!-- Will be populated by JavaScript -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div class="modal fade" id="loginModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content modal-dark">
+        <div class="modal-header">
+          <h5 class="modal-title text-gold">Welcome</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <ul class="nav nav-tabs nav-dark mb-4" id="authTabs">
+            <li class="nav-item">
+              <a class="nav-link active" data-bs-toggle="tab" href="#login">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-bs-toggle="tab" href="#signup">Sign Up</a>
+            </li>
+          </ul>
+
+          <!-- Login Tab -->
+          <div id="login" class="tab-pane fade show active">
+            <form id="loginForm">
+              <div class="mb-3">
+                <input type="email" class="form-control form-control-dark" placeholder="Email" id="loginEmail" required>
+              </div>
+              <div class="mb-3">
+                <input type="password" class="form-control form-control-dark" placeholder="Password" id="loginPassword" required>
+              </div>
+              <button type="submit" class="btn btn-gold w-100">Login</button>
+            </form>
+          </div>
+
+          <!-- Signup Tab -->
+          <div id="signup" class="tab-pane fade">
+            <form id="signupForm">
+              <div class="mb-3">
+                <input type="text" class="form-control form-control-dark" placeholder="Full Name" id="signupName" required>
+              </div>
+              <div class="mb-3">
+                <input type="email" class="form-control form-control-dark" placeholder="Email" id="signupEmail" required>
+              </div>
+              <div class="mb-3">
+                <input type="password" class="form-control form-control-dark" placeholder="Password" id="signupPassword" required>
+              </div>
+              <button type="submit" class="btn btn-gold w-100">Sign Up</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Spinner -->
+  <div class="spinner-overlay" id="loadingSpinner">
+    <div class="spinner-content">
+      <div class="spinner-animation"></div>
+      <p>Weaving your design...</p>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="app.js"></script>
+<script src="generate.js"></script>
+</body>
+</html>
