@@ -10,42 +10,42 @@ const inspirationDesigns = [
     prompt: 'Traditional Paithani saree with peacock motif, gold zari borders, burgundy silk background',
     region: 'Maharashtra',
     type: 'Traditional',
-    image: 'https://api.dicebear.com/7.x/shapes/svg?seed=paithani&backgroundColor=%23800020&size=512'
+    image: '/designs/design_1778315319047.png'
   },
   {
     name: 'Bandhani',
     prompt: 'Vibrant Bandhani tie-dye pattern with intricate dots, yellow and blue colors',
     region: 'Gujarat',
     type: 'Traditional',
-    image: 'https://api.dicebear.com/7.x/shapes/svg?seed=bandhani&backgroundColor=%23FFD700&size=512'
+    image: '/designs/design_1778315325343.png'
   },
   {
     name: 'Ikat',
     prompt: 'Indigo Ikat pattern with geometric diamond motifs, white and blue contrast',
     region: 'Rajasthan',
     type: 'Geometric',
-    image: 'https://api.dicebear.com/7.x/shapes/svg?seed=ikat&backgroundColor=%231E3A8A&size=512'
+    image: '/designs/design_1778315457411.png'
   },
   {
     name: 'Floral Garden',
     prompt: 'Lush floral design with roses, jasmine, and marigold flowers on emerald silk',
     region: 'Maharashtra',
     type: 'Floral',
-    image: 'https://api.dicebear.com/7.x/shapes/svg?seed=floral&backgroundColor=%23047857&size=512'
+    image: '/designs/design_1778315459334.png'
   },
   {
     name: 'Desert Mirage',
     prompt: 'Abstract geometric pattern inspired by desert sand dunes and mirages in warm oranges and golds',
     region: 'Rajasthan',
     type: 'Abstract',
-    image: 'https://api.dicebear.com/7.x/shapes/svg?seed=desert&backgroundColor=%23EA580C&size=512'
+    image: '/designs/design_1778316505829.png'
   },
   {
     name: 'Lotus Dreams',
     prompt: 'Mystical lotus flowers with water ripples, shimmering silver and deep purple',
     region: 'Gujarat',
     type: 'Floral',
-    image: 'https://api.dicebear.com/7.x/shapes/svg?seed=lotus&backgroundColor=%235B21B6&size=512'
+    image: '/designs/design_1778316686536.png'
   }
 ];
 
@@ -262,26 +262,36 @@ function copyToClipboard(text) {
 
 // ==================== SURPRISE ME & PROMPT GENERATION ====================
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('generatePromptBtn').addEventListener('click', () => {
-    const newPrompt = generateRandomPrompt();
-    document.getElementById('promptInput').value = newPrompt;
-    showToast('✨ Prompt generated!', 'info');
-  });
+  const generatePromptBtn = document.getElementById('generatePromptBtn');
+  if (generatePromptBtn) {
+    generatePromptBtn.addEventListener('click', () => {
+      const newPrompt = generateRandomPrompt();
+      document.getElementById('promptInput').value = newPrompt;
+      showToast('✨ Prompt generated!', 'info');
+    });
+  }
 
-  document.getElementById('surpriseMeBtn').addEventListener('click', () => {
-    const inspiration = inspirationDesigns[Math.floor(Math.random() * inspirationDesigns.length)];
-    document.getElementById('promptInput').value = inspiration.prompt;
-    document.getElementById('regionSelect').value = inspiration.region;
-    document.getElementById('patternSelect').value = inspiration.type;
-    showToast(`✨ Inspired by "${inspiration.name}"!`, 'info');
-  });
+  const surpriseMeBtn = document.getElementById('surpriseMeBtn');
+  if (surpriseMeBtn) {
+    surpriseMeBtn.addEventListener('click', () => {
+      const inspiration = inspirationDesigns[Math.floor(Math.random() * inspirationDesigns.length)];
+      document.getElementById('promptInput').value = inspiration.prompt;
+      document.getElementById('regionSelect').value = inspiration.region;
+      document.getElementById('patternSelect').value = inspiration.type;
+      showToast(`✨ Inspired by "${inspiration.name}"!`, 'info');
+    });
+  }
 
-  document.getElementById('generateDesignBtn').addEventListener('click', generateDesign);
+  const generateDesignBtn = document.getElementById('generateDesignBtn');
+  if (generateDesignBtn) {
+    generateDesignBtn.addEventListener('click', generateDesign);
+  }
 });
 
 // ==================== INSPIRATIONS GRID ====================
 function initializeInspirations() {
   const grid = document.getElementById('inspirationsGrid');
+  if (!grid) return;
   grid.innerHTML = '';
 
   inspirationDesigns.forEach(design => {
@@ -316,6 +326,8 @@ function scrollToSidebar() {
 function initializeSidebarToggle() {
   const toggleBtn = document.getElementById('sidebarToggle');
   const sidebar = document.getElementById('sidebar');
+
+  if (!toggleBtn || !sidebar) return;
 
   toggleBtn.addEventListener('click', () => {
     sidebar.classList.toggle('show');
@@ -424,8 +436,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Handle window resize for responsive sidebar
 window.addEventListener('resize', () => {
-  if (window.innerWidth >= 1200) {
-    document.getElementById('sidebar').classList.remove('show');
+  const sidebar = document.getElementById('sidebar');
+  if (sidebar && window.innerWidth >= 1200) {
+    sidebar.classList.remove('show');
   }
 });
 
@@ -434,15 +447,16 @@ document.addEventListener('keydown', (e) => {
   // Ctrl/Cmd + Enter to generate
   if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
     const promptInput = document.getElementById('promptInput');
-    if (document.activeElement === promptInput) {
+    if (promptInput && document.activeElement === promptInput) {
       generateDesign();
     }
   }
 
   // Escape to close sidebar on mobile
   if (e.key === 'Escape') {
-    if (window.innerWidth < 1200) {
-      document.getElementById('sidebar').classList.remove('show');
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar && window.innerWidth < 1200) {
+      sidebar.classList.remove('show');
     }
   }
 });
