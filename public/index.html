@@ -62,25 +62,65 @@
     }
 
     .feature-card {
-      background: rgba(26, 31, 58, 0.5);
+      background: rgba(26, 31, 58, 0.6);
       border: 1px solid var(--color-border);
       border-radius: 15px;
-      padding: 30px;
+      padding: 35px 30px;
       height: 100%;
-      transition: var(--transition-smooth);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, transparent 50%, rgba(212, 175, 55, 0.03) 100%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .feature-card:hover::before {
+      opacity: 1;
     }
 
     .feature-card:hover {
-      transform: translateY(-10px);
+      transform: translateY(-12px) scale(1.02);
       border-color: var(--color-gold);
-      box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15);
+      box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2), 0 0 20px rgba(212, 175, 55, 0.08);
+      background: rgba(26, 31, 58, 0.8);
+    }
+
+    .feature-card p {
+      color: #b0b0c0;
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .feature-card h4 {
+      color: #e8e8f0;
+      transition: color 0.3s ease;
+    }
+
+    .feature-card:hover h4 {
+      color: var(--color-gold-light);
     }
 
     .feature-icon {
       font-size: 2.5rem;
       color: var(--color-gold);
       margin-bottom: 20px;
+      transition: all 0.4s ease;
+    }
+
+    .feature-card:hover .feature-icon {
+      transform: scale(1.15);
+      filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.5));
     }
     
     @media (max-width: 768px) {
@@ -147,14 +187,14 @@
           <div class="feature-card text-center">
             <i class="fas fa-brain feature-icon"></i>
             <h4 class="mb-3">Advanced AI Models</h4>
-            <p class="text-muted">Powered by cutting-edge Stable Diffusion technology tailored specifically for textile patterns and intricate fabric designs.</p>
+            <p>Powered by cutting-edge Stable Diffusion technology tailored specifically for textile patterns and intricate fabric designs.</p>
           </div>
         </div>
         <div class="col-md-4">
           <div class="feature-card text-center">
             <i class="fas fa-om feature-icon"></i>
             <h4 class="mb-3">Cultural Authenticity</h4>
-            <p class="text-muted">Generates patterns deeply rooted in Indian traditions, from Maharashtrian Paithani to Rajasthani Bandhani.</p>
+            <p>Generates patterns deeply rooted in Indian traditions, from Maharashtrian Paithani to Rajasthani Bandhani.</p>
           </div>
         </div>
         <div class="col-md-4">
